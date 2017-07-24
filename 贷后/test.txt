@@ -1,0 +1,8 @@
+*** Settings ***
+Library           ExcelLibrary
+
+*** Test Cases ***
+读取EXCEL
+    Open Excel    E:\\mixninloan\\RFtest.xls
+    ${test}     Read Cell Data By Name    Sheet1    A1
+    log    ${test}

@@ -1,0 +1,22 @@
+*** Settings ***
+Resource          ../变量关键字/Variable.txt
+Resource          ../流程关键字/登录流程.txt
+
+*** Variables ***
+
+*** Test Cases ***
+筛选合同
+    [Setup]
+    [Timeout]
+    登录系统    #登录系统
+    Click Link    xpath=//*[@id="side-menu"]/li[2]/a    #合同管理
+    Click Element    xpath=//*[@id="side-menu"]/li[2]/ul[1]/li/a    #合同归档列表
+    sleep    3
+    Select Frame    xpath=//*[@id="content-main"]/iframe[2]    #放款开始时间
+    sleep    5
+    Execute Javascript    window.document.getElementById('payActDateStart').value=' '    #清空时间
+    sleep    2
+    input text    id=custPriName    brand
+    sleep    2
+    Click Element    //*[@id="search"]    #查询
+    Wait Until Page Contains Element    xpath=//*[@id="2"]/td[6]    5    not found

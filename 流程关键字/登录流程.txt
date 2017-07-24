@@ -1,0 +1,9 @@
+*** Keywords ***
+登录系统
+    Open Browser    ${loan_url}    chrome    #登录chrome
+    Input Text    id=username    ${username}    #登录名
+    Input Text    id=password    ${password}    #登录密码
+    Click Button    name=submit
+    sleep    2
+    Maximize Browser Window    #最大化
+    Wait Until Element Contains    xpath=//*[@id="side-menu"]/li[1]/div[1]/a/span/span/strong    超级管理员    3

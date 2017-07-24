@@ -1,0 +1,15 @@
+*** Settings ***
+Library           DatabaseLibrary
+Resource          ../变量关键字/Variable.txt
+Library           String
+
+*** Test Cases ***
+pyodbc
+    Connect To Database Using Custom Params    pymysql    ${pymysql}
+    @{queryresults}    query    ${statement}
+    log    @{queryresults}
+    ${a}    Set Variable    @{queryresults}
+    log    ${a[0]}
+    ${count}    Row Count    ${statement1}
+    log    ${count}
+    Disconnect From Database

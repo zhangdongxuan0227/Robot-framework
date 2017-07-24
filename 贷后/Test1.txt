@@ -1,0 +1,4 @@
+*** Test Cases ***
+拼接
+    ${a}    Catenate    SEPARATOR=***    nihao    shijie
+    log    ${a}

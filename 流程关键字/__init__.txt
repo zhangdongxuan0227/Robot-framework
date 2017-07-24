@@ -1,0 +1,9 @@
+*** Keywords ***
+登录系统
+    Open browser    ${loan_url}    chrome
+    input text    id=username    ${username}
+    input text    id=password    ${password}
+    click button    name=submit
+    sleep    2
+    Maximize Browser Window
+    sleep    5
