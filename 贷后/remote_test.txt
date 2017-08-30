@@ -1,0 +1,5 @@
+*** Settings ***
+Library           Remote
+
+*** Test Cases ***
+远程调用

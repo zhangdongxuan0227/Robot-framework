@@ -1,0 +1,36 @@
+*** Keywords ***
+进入新增产品页面
+    Click Link    xpath=//*[@id="systemAndMenu"]/li[1]/a    #产品管理列表
+    sleep    2
+    Select Frame    xpath=${iframe2}
+    Wait Until Page Contains    新增产品
+    Click Link    xpath=//*[@id="addpro"]    #新增产品
+
+进入新增合同页面
+    Click Link    xpath=//*[@id="systemAndMenu"]/li[2]/a    #合同管理
+    sleep    2
+    Select Frame    xpath=${iframe2}
+    Wait Until Page Contains    新增合同
+    Click Link    xpath=//*[@id="addcontract"]    #新增合同
+
+复制并新增合同页面
+    #复制新增上传文件
+    Click Link    xpath=//*[@id="jqg_table_list_1_1"]    #选择合同
+    Click Link    xpath=//*[@id="copycontract"]    #复制并新增
+    Wait Until Page Contains    合同模板
+    sleep    3
+    Click Element    xpath=${addcontract}    #+号增加
+    Select From List    name=type2    服务协议
+    Click Element    xpath=//input[@id='pingtai10' and @value='1']    #平台签约
+    Click Element    xpath=//input[@id='pingtai11' and @value='2']    #营业部签约
+    sleep    3
+    Click Element    xpath=//input[@id='chujieren10' and @value='1']    #出借人
+    Click Element    xpath=//input[@id='chujieren11' and @value='2']    #借款人
+    sleep    3
+    Click Button    name=file2    #上传文件
+    Win Wait Active    打开    \    5    #文件弹出框
+    sleep    2
+    Control Set Text    \    \    Edit1    ${contact_dir}\\咨询服务协议.doc
+    sleep    2
+    Control Click    \    \    Button1
+    sleep    2

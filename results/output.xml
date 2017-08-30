@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20170824 14:07:14.189" generator="Robot 3.0.2 (Python 2.7.13 on win32)">
+<suite source="E:\minxinloan\产品中心\产品中心系统流程\产品管理列表.txt" id="s1" name="产品管理列表">
+<test id="s1-t1" name="新增产品_取消">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>新增产品_取消流程</arg>
+</arguments>
+<msg timestamp="20170824 14:07:15.063" level="INFO">新增产品_取消流程</msg>
+<status status="PASS" endtime="20170824 14:07:15.064" starttime="20170824 14:07:15.063"></status>
+</kw>
+<kw name="登录信息" library="系统信息">
+<kw name="Open Browser" library="Selenium2Library">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${product_url}</arg>
+<arg>chrome</arg>
+</arguments>
+<msg timestamp="20170824 14:07:15.064" level="INFO">Opening browser 'chrome' to base url 'http://10.10.21.71:8080/sso/login?service=http%3A%2F%2F10.10.22.102%3A8097%2Fproducts-manager%2F%2Fcallback%3Fclient_name%3DCasClient'</msg>
+<kw name="Capture Page Screenshot" library="Selenium2Library">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20170824 14:07:20.229" level="FAIL">No browser is open</msg>
+<status status="FAIL" endtime="20170824 14:07:20.229" starttime="20170824 14:07:20.203"></status>
+</kw>
+<msg timestamp="20170824 14:07:20.229" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No browser is open</msg>
+<msg timestamp="20170824 14:07:20.284" level="FAIL">WebDriverException: Message: session not created exception
+from disconnected: received Inspector.detached event
+  (Session info: chrome=60.0.3112.101)
+  (Driver info: chromedriver=2.31.488763 (092de99f48a300323ecf8c2a4e2e7cab51de5ba8),platform=Windows NT 6.1.7601 SP1 x86_64)
+</msg>
+<status status="FAIL" endtime="20170824 14:07:20.284" starttime="20170824 14:07:15.064"></status>
+</kw>
+<status status="FAIL" endtime="20170824 14:07:20.284" starttime="20170824 14:07:15.064"></status>
+</kw>
+<kw type="teardown" name="Run" library="OperatingSystem">
+<doc>Runs the given command in the system and returns the output.</doc>
+<arguments>
+<arg>taskkill /f /t /im chromedriver.exe</arg>
+</arguments>
+<msg timestamp="20170824 14:07:20.380" level="INFO">Running command 'taskkill /f /t /im chromedriver.exe 2&gt;&amp;1'.</msg>
+<status status="PASS" endtime="20170824 14:07:21.034" starttime="20170824 14:07:20.285"></status>
+</kw>
+<status status="FAIL" endtime="20170824 14:07:21.034" critical="yes" starttime="20170824 14:07:15.062">WebDriverException: Message: session not created exception
+from disconnected: received Inspector.detached event
+  (Session info: chrome=60.0.3112.101)
+  (Driver info: chromedriver=2.31.488763 (092de99f48a300323ecf8c2a4e2e7cab51de5ba8),platform=Windows NT 6.1.7601 SP1 x86_64)
+</status>
+</test>
+<doc>*产品管理列表*</doc>
+<status status="FAIL" endtime="20170824 14:07:21.044" starttime="20170824 14:07:14.193"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="0">Critical Tests</stat>
+<stat fail="1" pass="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="1" id="s1" name="产品管理列表" pass="0">产品管理列表</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20170824 14:07:20.229" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No browser is open</msg>
+</errors>
+</robot>

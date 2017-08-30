@@ -1,0 +1,4 @@
+*** Variables ***
+${statement}      select t.id, t.contract_name, t.contract_version, t.contract_status, (select count(1) from prd_product_scheme_info pcd where pcd.contract_id=t.id) num, t.create_time,t.stop_use_time,t.create_name from prd_contract_info t WHERE contract_status in(0,1) ORDER BY t.create_time desc    # 查询数据
+${pymysql}        host='10.10.22.78',port=3306,user='prodtest',password='liDPijAP4c',database='prodtest',charset='GBK'    # 产品中心数据库配置
+${statement2}     SELECT * FROM prd_contract_info WHERE id=202

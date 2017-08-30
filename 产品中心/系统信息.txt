@@ -1,0 +1,39 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          系统变量.txt
+
+*** Keywords ***
+登录信息
+    Open Browser    ${product_url}    chrome    #登录系统
+    Input text    id=username    ${username}    #登录名
+    Input Text    id=password    ${password}    #输登录密码
+    Click Button    name=submit
+    Sleep    5
+    Maximize Browser Window
+    Wait Until Element Contains    //*[@id="userlabel"]    minxin    3
+
+关闭浏览器
+    Close All Browsers
+
+合同提示框ok
+    Click Button    xpath=//*[@id="surebtn"]    #点击确定
+    Capture Page Screenshot
+    Wait Until Page Contains    是否提交    3
+    Unselect Frame
+    Click Button    xpath=${button_ok}    #是否提交之ok
+    Wait Until Page Contains    提交成功    3
+    Capture Page Screenshot
+    Click Button    xpath=${button_ok}    #提交成功，页面关闭
+
+合同管理列表
+    Click Link    xpath=//*[@id="systemAndMenu"]/li[2]/a    #合同管理
+    sleep    2
+    Select Frame    xpath=${iframe2}
+
+合同_签约模式与适用人群
+    Click Element    xpath=//input[@id='pingtai10' and @value='1']    #平台签约
+    Click Element    xpath=//input[@id='pingtai11' and @value='2']    #营业部签约
+    sleep    3
+    Click Element    xpath=//input[@id='chujieren10' and @value='1']    #出借人
+    Click Element    xpath=//input[@id='chujieren11' and @value='2']    #借款人
+    sleep    3

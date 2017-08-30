@@ -1,0 +1,152 @@
+*** Settings ***
+Documentation     *合同管理列表*
+Suite Teardown
+Resource          ../系统信息.txt
+Library           Selenium2Library
+Library           AutoItLibrary
+Resource          ../分支流程.txt
+Library           DatabaseLibrary
+Library           String
+Resource          ../数据库查询.txt
+
+*** Test Cases ***
+新增合同_提交
+    log    新增合同_提交
+    登录信息
+    进入新增合同页面
+    Unselect Frame
+    Select Frame    xpath=${iframe3}
+    #输入信息
+    Input Text    name=contractname    星火贷    #合同名称
+    sleep    3
+    Select From List    name=type1    借款协议
+    合同_签约模式与适用人群
+    #上传文件
+    Click Button    name=file1    #上传文件
+    Win Wait Active    打开    \    5    #文件弹出框
+    sleep    2
+    Control Set Text    \    \    Edit1    ${contact_dir}\\房贷合同.doc
+    sleep    2
+    Control Click    \    \    Button1
+    Click Element    xpath=${addcontract}    #+号增加
+    Select From List    name=type2    服务协议
+    合同_签约模式与适用人群
+    Click Button    name=file2    #上传文件
+    Win Wait Active    打开    \    5    #文件弹出框
+    sleep    2
+    Control Set Text    \    \    Edit1    ${contact_dir}\\咨询服务协议.doc
+    sleep    2
+    Control Click    \    \    Button1
+    sleep    2
+    #提示框处理
+    Click Button    xpath=//*[@id="surebtn"]    #点击确定
+    Capture Page Screenshot
+    Wait Until Page Contains    是否提交    3
+    Unselect Frame
+    Click Button    xpath=${button_ok}    #是否提交之ok
+    Wait Until Page Contains    提交成功    3
+    Capture Page Screenshot
+    Click Button    xpath=${button_ok}    #提交成功，页面关闭
+    sleep    3
+    Capture Page Screenshot
+    Comment    关闭浏览器
+
+新增合同_取消
+    log    新增合同_取消流程
+    登录信息
+    进入新增合同页面
+    Unselect Frame
+    Select Frame    xpath=${iframe3}
+    #取消退出
+    Click Button    xpath=//*[@id="cancelbtn"]    #弹出对话框
+    Capture Page Screenshot
+    Unselect Frame
+    Click Button    xpath=${button_ok}    #点击确定
+    sleep    3
+    关闭浏览器
+
+复制并新增合同
+    登录信息
+    复制并新增合同页面
+    合同提示框ok
+
+合同管理_查看
+    登录信息
+    合同管理列表    #进入合同管理页面
+    #点击查看
+    Click Link    xpath=//a[contains(@data-id,'221') and contains(text(),'查看')] \     #查看
+    Wait Until Page Contains    合同详情
+    Capture Page Screenshot
+    sleep    2
+    Unselect Frame
+    Select Frame    xpath=${iframe3}
+    Click Element    xpath=//*[@id="cancelbtn"]    #返回
+
+合同管理_删除
+    [Documentation]    *前置条件：关联产品方案*
+    登录信息
+    合同管理列表
+    #点击删除
+    Click Link    xpath=//a[contains(@data-id,'221') and contains(text(),'删除')]    #删除
+    #确认删除合同
+    Wait Until Page Contains    确认删除此合同？
+    Capture Page Screenshot
+    sleep    2
+    Click Button    xpath=${button_ok}    #点击ok
+    Wait Until Page Contains    有方案关联此合同，不能删除！
+    Capture Page Screenshot
+    sleep    2
+    Click Button    xpath=${button_ok}    #点击ok
+
+合同管理_停用
+    [Documentation]    *前置条件：关联产品方案*
+    登录信息
+    合同管理列表
+    #点击停用
+    Click Link    xpath=//a[contains(@data-id,'221') and contains(text(),'停用')]     #停用
+    #确认停用合同
+    Wait Until Page Contains    确认停用此合同？
+    Capture Page Screenshot
+    sleep    2
+    Click Button    xpath=${button_ok}    #点击ok
+    Wait Until Page Contains    有方案关联此合同，不能停用！
+    Capture Page Screenshot
+    sleep    2
+    Click Button    xpath=${button_ok}    #点击ok
+
+合同管理_停用2
+    [Documentation]    *前置条件：未关联产品方案*
+    登录信息
+    合同管理列表
+    #点击停用
+    Click Link    xpath=//a[contains(@data-id,'221') and contains(text(),'停用')]    #停用
+    #确认停用合同
+    Wait Until Page Contains    确认停用此合同？
+    Capture Page Screenshot
+    sleep    2
+    Click Button    xpath=${button_ok}    #点击ok
+    Wait Until Page Contains    成功
+    Capture Page Screenshot
+    sleep    2
+    Click Button    xpath=${button_ok}    #点击ok
+
+合同管理_关联方案
+    登录信息
+    合同管理列表
+
+查询sql
+    [Documentation]    *查询sql*
+    Connect To Database Using Custom Params    pymysql    ${pymysql}
+    @{queryresults}    query    ${statement}
+    log many    @{queryresults}
+    ${a}    Set Variable    @{queryresults}
+    log    ${a[0][4]}
+    ${count}    Row Count    ${statement}
+    Disconnect From Database
+
+test
+    登录信息
+    Click Link    xpath=//*[@id="systemAndMenu"]/li[2]/a    #合同管理
+    sleep    2
+    Select Frame    xpath=${iframe2}
+    Click Link    xpath=//a[contains(@data-id,'215') and contains(text(),'查看')]    #查看

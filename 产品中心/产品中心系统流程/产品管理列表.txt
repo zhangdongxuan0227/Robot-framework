@@ -1,0 +1,75 @@
+*** Settings ***
+Documentation     *产品管理列表*
+Library           Selenium2Library
+Library           AutoItLibrary
+Resource          ../系统信息.txt
+Library           Screenshot
+Resource          ../分支流程.txt
+Library           OperatingSystem
+
+*** Test Cases ***
+新增产品_提交
+    [Template]
+    log    新增产品_提交
+    登录信息
+    #进入新增产品页面
+    进入新增产品页面
+    Unselect Frame
+    Select Frame    xpath=//*[@id="content-main"]/iframe[3]
+    #基本信息
+    Select From List    name=businessType    信贷    #选择产品
+    sleep    3
+    Input Text    name=name    闪电贷    #产品名称
+    Click Link    xpath=//*[@id="mainForm"]/div[1]/div[1]/div/div[2]/div/div[3]/a
+    sleep    4
+    Comment    Execute Javascript    docunment.getElementsByClassName("weui-icon-checked").value='1'    #产品备注
+    Click Element    xpath=//input[@type='checkbox' and @value='1']    #产品备注
+    Select From List    name=repayType    等额本息    #还款方式
+    Input Text    name=periodLength    1    #单期长度
+    Select From List    name=periodLengthUnit    月    #单期长度
+    sleep    3
+    Input Text    xpath=//*[@id="mainForm"]/div[1]/div[1]/div/div[2]/div/div[6]/textarea    test闪电贷    #添加备注
+    Click Link    xpath=//*[@id="mainForm"]/div[1]/div[1]/div/div[2]/a    #下一页
+    sleep    5
+    #放款还款日规则
+    Select From List    name=loansart    合同金额*放款比例    #放款规则
+    Click Element    xpath=//*[@id="fixed"]    #还款日规则
+    sleep    3
+    Input Text    xpath=//*[@id="mainForm"]/div[1]/div[2]/div/div[2]/div/table/tbody/tr/td[1]/input[1]    1
+    Input Text    xpath=//*[@id="mainForm"]/div[1]/div[2]/div/div[2]/div/table/tbody/tr/td[1]/input[2]    31
+    Select From List By Value    xpath=//*[@id="mainForm"]/div[1]/div[2]/div/div[2]/div/table/tbody/tr/td[2]/select    次月
+    Click Element    id=isHolidayPostpone    #节假日顺延
+    #服务费、逾期费用规则
+    Input Text    name=yearRate    10    #年综合费率
+    Click Element    xpath=//*[@id="isPreServiceCharge"]    #前期服务费
+    sleep    2
+    Select From List    name=preServiceChargeRuleselect    合同金额*前期服务费率
+    Click Element    xpath=//*[@id="isDivideServiceCharge"]    #分期服务费
+    sleep    2
+    Select From List    name=isDivideServiceChargeselect    合同金额*分期服务费率
+    #提前结清、还款顺序规则
+    Select From List    name=advanceselect    最近一期月利息+月服务费+剩余合同金额    #提前结清金额
+    Select From List    name=repayturnselect    服务费→违约金→罚息→利息→本金    #还款顺序
+    sleep    2
+    Click Link    xpath=//*[@id="submitbtn"]
+
+新增产品_取消
+    log    新增产品_取消流程
+    登录信息
+    进入新增产品页面
+    Unselect Frame
+    Select Frame    xpath=//*[@id="content-main"]/iframe[3]
+    #取消退出
+    Click Link    xpath=//*[@id="cancelbtn"]    #弹出对话框
+    Capture Page Screenshot
+    Unselect Frame
+    Click Button    xpath=${button_ok}    #点击确定
+    SLEEP    4
+    关闭浏览器
+    [Teardown]    OperatingSystem.Run    taskkill /f /t /im chromedriver.exe    # 杀掉chrome进程
+
+复制并新增产品
+    登录信息
+
+试算并新增
+    登录信息

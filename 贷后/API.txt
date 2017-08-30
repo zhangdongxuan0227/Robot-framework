@@ -1,0 +1,6 @@
+*** Settings ***
+Library           RequestsLibrary
+Library           requests
+
+*** Test Cases ***
+APITEST

@@ -1,3 +1,6 @@
+*** Settings ***
+Library           Selenium2Library
+
 *** Keywords ***
 登录系统
     Open Browser    ${loan_url}    chrome    #登录chrome

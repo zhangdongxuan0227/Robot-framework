@@ -1,0 +1,11 @@
+*** Variables ***
+${product_url}    http://10.10.21.71:8080/sso/login?service=http%3A%2F%2F10.10.22.102%3A8097%2Fproducts-manager%2F%2Fcallback%3Fclient_name%3DCasClient    # 登录地址
+${username}       minxin    # 登录名
+${password}       123456    # 密码
+${contact_dir}    C:\\Users\\Administrator\\Desktop\\合同信息    # 合同路径
+${iframe1}        ${EMPTY}
+${iframe2}        //*[@id="content-main"]/iframe[2]
+${iframe3}        //*[@id="content-main"]/iframe[3]
+${iframe4}        //*[@id="content-main"]/iframe[4]
+${button_ok}      /html/body/div[4]/div[7]/div/button    # 弹出框ok
+${addcontract}    //*[@id="addContractForm"]/div[2]/div/table/tbody/tr/td[4]/div/a    # +号

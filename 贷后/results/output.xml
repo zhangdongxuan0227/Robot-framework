@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20170816 17:01:31.623" generator="Robot 3.0.2 (Python 2.7.13 on win32)">
+<suite source="E:\minxinloan\贷后\时间控件.txt" id="s1" name="时间控件">
+<test id="s1-t1" name="timeactive">
+<kw name="Add Time To Date" library="DateTime">
+<doc>Adds time to date and returns the resulting date.</doc>
+<arguments>
+<arg>2017-07-04 10:00.00</arg>
+<arg>4 days</arg>
+</arguments>
+<assign>
+<var>${date}</var>
+</assign>
+<msg timestamp="20170816 17:01:31.691" level="INFO">${date} = 2017-07-08 10:00:00.000</msg>
+<status status="PASS" endtime="20170816 17:01:31.691" starttime="20170816 17:01:31.651"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${date}</arg>
+<arg>2017-07-08 10:00.00.000</arg>
+</arguments>
+<msg timestamp="20170816 17:01:31.692" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<msg timestamp="20170816 17:01:31.692" level="FAIL">2017-07-08 10:00:00.000 != 2017-07-08 10:00.00.000</msg>
+<status status="FAIL" endtime="20170816 17:01:31.692" starttime="20170816 17:01:31.691"></status>
+</kw>
+<status status="FAIL" endtime="20170816 17:01:31.692" critical="yes" starttime="20170816 17:01:31.650">2017-07-08 10:00:00.000 != 2017-07-08 10:00.00.000</status>
+</test>
+<status status="FAIL" endtime="20170816 17:01:31.693" starttime="20170816 17:01:31.626"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="0">Critical Tests</stat>
+<stat fail="1" pass="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="1" id="s1" name="时间控件" pass="0">时间控件</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

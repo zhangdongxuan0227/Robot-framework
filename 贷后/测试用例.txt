@@ -1,6 +1,7 @@
 *** Settings ***
 Resource          ../变量关键字/Variable.txt
 Resource          ../流程关键字/登录流程.txt
+Library           Selenium2Library
 
 *** Variables ***
 
@@ -20,3 +21,4 @@ Resource          ../流程关键字/登录流程.txt
     sleep    2
     Click Element    //*[@id="search"]    #查询
     Wait Until Page Contains Element    xpath=//*[@id="2"]/td[6]    5    not found
+    log    ${TEST NAME}
