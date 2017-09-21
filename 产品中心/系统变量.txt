@@ -8,4 +8,5 @@ ${iframe2}        //*[@id="content-main"]/iframe[2]
 ${iframe3}        //*[@id="content-main"]/iframe[3]
 ${iframe4}        //*[@id="content-main"]/iframe[4]
 ${button_ok}      /html/body/div[4]/div[7]/div/button    # 弹出框ok
-${addcontract}    //*[@id="addContractForm"]/div[2]/div/table/tbody/tr/td[4]/div/a    # +号
+${addcontract}    //a[contains(@id,"addContractForm") and contains(@title,'添加')]    # +号
+${index}          http://10.10.22.102:8097/products-manager/    # 首页地址

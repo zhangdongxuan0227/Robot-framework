@@ -4,6 +4,7 @@ Resource          系统变量.txt
 
 *** Keywords ***
 登录信息
+    [Arguments]    ${product_url}    ${username}    ${password}    # 用户登录信息
     Open Browser    ${product_url}    chrome    #登录系统
     Input text    id=username    ${username}    #登录名
     Input Text    id=password    ${password}    #输登录密码
@@ -30,10 +31,18 @@ Resource          系统变量.txt
     sleep    2
     Select Frame    xpath=${iframe2}
 
-合同_签约模式与适用人群
+合同_签约模式与适用人群1
     Click Element    xpath=//input[@id='pingtai10' and @value='1']    #平台签约
     Click Element    xpath=//input[@id='pingtai11' and @value='2']    #营业部签约
     sleep    3
     Click Element    xpath=//input[@id='chujieren10' and @value='1']    #出借人
     Click Element    xpath=//input[@id='chujieren11' and @value='2']    #借款人
+    sleep    3
+
+合同_签约模式与适用人群2
+    Click Element    xpath=//input[@id='pingtai20' and @value='1']    #平台签约
+    Click Element    xpath=//input[@id='pingtai21' and @value='2']    #营业部签约
+    sleep    3
+    Click Element    xpath=//input[@id='chujieren20' and @value='1']    #出借人
+    Click Element    xpath=//input[@id='chujieren21' and @value='2']    #借款人
     sleep    3

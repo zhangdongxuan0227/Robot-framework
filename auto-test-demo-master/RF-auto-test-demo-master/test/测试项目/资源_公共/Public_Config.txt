@@ -1,0 +1,13 @@
+*** Settings ***
+Documentation     公共配置
+...               14(auto_test) 用于存放数据驱动用例数据，请自建表设计表数据，并将数据脚本化；
+...               上线测试4线隔离服务器：137(coredb9) 测试组ZYYW,138(coredb138) 测试组JMYW,139(coredb139) 测试组ZYBL,140(coredb140) 测试组ZYHH,
+...               master分支（coredb）
+...
+...               如：测试数据库地址； 230(PC_db_test_cor230)
+
+*** Variables ***
+#**********************************************************************************************
+#测试环境数据库
+${PC_db_test_cor380}    database='coredb', user='8dol', password='8dol', host='172.23.3.85', port=3306
+${PC_db_test_cor124}    database='coredb124', user='8dol', password='8dol', host='192.168.100.141', port=3306

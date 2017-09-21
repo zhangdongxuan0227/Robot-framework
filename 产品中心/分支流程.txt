@@ -34,3 +34,12 @@
     sleep    2
     Control Click    \    \    Button1
     sleep    2
+
+合同名变量
+    [Documentation]    *参数化变量*
+    :FOR    ${index}    in range    11
+    \    log    ${index}
+    \    ${contract_name}    Catenate    SEPARATOR=    星火贷    ${index}
+    Comment    \    log    ${contract_name}
+    ${b}    evaluate    random.randint(0,20)    random
+    log    ${b}

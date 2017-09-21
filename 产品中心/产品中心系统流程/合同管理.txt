@@ -1,6 +1,8 @@
 *** Settings ***
 Documentation     *合同管理列表*
-Suite Teardown
+Suite Setup       登录信息    ${product_url}    ${username}    ${password}    # 登录信息
+Suite Teardown    close all browsers    # 关闭
+Test Setup        Go To    ${index}    # 跳转首页
 Resource          ../系统信息.txt
 Library           Selenium2Library
 Library           AutoItLibrary
@@ -10,17 +12,18 @@ Library           String
 Resource          ../数据库查询.txt
 
 *** Test Cases ***
-新增合同_提交
+新增合同_提交_上传
     log    新增合同_提交
-    登录信息
+    Comment    登录信息
     进入新增合同页面
     Unselect Frame
     Select Frame    xpath=${iframe3}
     #输入信息
+    Comment    合同名变量    #参数化
     Input Text    name=contractname    星火贷    #合同名称
     sleep    3
     Select From List    name=type1    借款协议
-    合同_签约模式与适用人群
+    合同_签约模式与适用人群1
     #上传文件
     Click Button    name=file1    #上传文件
     Win Wait Active    打开    \    5    #文件弹出框
@@ -28,9 +31,9 @@ Resource          ../数据库查询.txt
     Control Set Text    \    \    Edit1    ${contact_dir}\\房贷合同.doc
     sleep    2
     Control Click    \    \    Button1
-    Click Element    xpath=${addcontract}    #+号增加
+    Click Element    xpath=//a[contains(@class,"addrow btn btn-white btn-outline") and contains(@title,'添加')]    #+号增加
     Select From List    name=type2    服务协议
-    合同_签约模式与适用人群
+    合同_签约模式与适用人群2
     Click Button    name=file2    #上传文件
     Win Wait Active    打开    \    5    #文件弹出框
     sleep    2
@@ -49,74 +52,108 @@ Resource          ../数据库查询.txt
     Click Button    xpath=${button_ok}    #提交成功，页面关闭
     sleep    3
     Capture Page Screenshot
-    Comment    关闭浏览器
+    [Teardown]
 
 新增合同_取消
     log    新增合同_取消流程
-    登录信息
+    Comment    登录信息
     进入新增合同页面
     Unselect Frame
     Select Frame    xpath=${iframe3}
     #取消退出
     Click Button    xpath=//*[@id="cancelbtn"]    #弹出对话框
+    Wait Until Page Contains    取消后您修改的信息将会丢失？
     Capture Page Screenshot
+    sleep    3
     Unselect Frame
     Click Button    xpath=${button_ok}    #点击确定
     sleep    3
     关闭浏览器
 
 复制并新增合同
+    [Tags]    pass
     登录信息
     复制并新增合同页面
     合同提示框ok
 
-合同管理_查看
-    登录信息
+合同管理_查看_下载
     合同管理列表    #进入合同管理页面
     #点击查看
-    Click Link    xpath=//a[contains(@data-id,'221') and contains(text(),'查看')] \     #查看
+    Input Text    id=contractName    自动化专用    #合同筛选
+    Click Button    xpath=//*[@id="search"]    #点击查询
+    Capture Page Screenshot
+    Click Link    xpath=//a[contains(@data-id,'221') and contains(text(),'查看')] \    #查看
     Wait Until Page Contains    合同详情
     Capture Page Screenshot
     sleep    2
     Unselect Frame
     Select Frame    xpath=${iframe3}
+    sleep    2
+    Click Link    xpath=//*[@id="320"]/td[7]/a    #下载
+    Comment    sleep    2
+    Comment    Win Wait    另存为    \    5    #另存为
+    Comment    Win Active    另存为
+    Comment    sleep    3
+    Comment    Control Set Text    \    \    Edit1
+    Comment    sleep    3
+    Comment    Control Click    \    \    Button1
+    sleep    3
     Click Element    xpath=//*[@id="cancelbtn"]    #返回
+    关闭浏览器
+    [Teardown]
 
 合同管理_删除
     [Documentation]    *前置条件：关联产品方案*
-    登录信息
+    log    合同管理_删除
+    Comment    登录信息
     合同管理列表
-    #点击删除
-    Click Link    xpath=//a[contains(@data-id,'221') and contains(text(),'删除')]    #删除
-    #确认删除合同
-    Wait Until Page Contains    确认删除此合同？
+    Input Text    id=contractName    自动化专用    #合同筛选
+    Click Button    xpath=//*[@id="search"]    #点击查询
     Capture Page Screenshot
+    #点击删除
+    Click Element    xpath=//*[@id="2"]/td[3]/div/div    #更多操作
     sleep    2
-    Click Button    xpath=${button_ok}    #点击ok
+    Click Link    xpath=//a[contains(@data-id,'221') and contains(@title,'删除')]    #删除
+    #确认删除合同
+    sleep    2
+    Capture Page Screenshot
+    Unselect Frame
+    Wait Until Page Contains    确认删除此合同？
+    Click Element    xpath=${button_ok}    #点击ok
+    Capture Page Screenshot
     Wait Until Page Contains    有方案关联此合同，不能删除！
     Capture Page Screenshot
-    sleep    2
-    Click Button    xpath=${button_ok}    #点击ok
+    sleep    3
+    Click Element    xpath=${button_ok}    #点击ok
+    [Teardown]
 
 合同管理_停用
     [Documentation]    *前置条件：关联产品方案*
-    登录信息
+    log    合同管理_停用
+    Comment    登录信息
     合同管理列表
-    #点击停用
-    Click Link    xpath=//a[contains(@data-id,'221') and contains(text(),'停用')]     #停用
-    #确认停用合同
-    Wait Until Page Contains    确认停用此合同？
+    Input Text    id=contractName    自动化专用    #合同筛选
+    Click Button    xpath=//*[@id="search"]    #点击查询
     Capture Page Screenshot
+    #点击停用
+    Click Element    xpath=//*[@id="2"]/td[3]/div/div    #更多操作
     sleep    2
-    Click Button    xpath=${button_ok}    #点击ok
+    Click Link    xpath=//a[contains(@data-id,'221') and contains(@title,'停用')]    #停用
+    #确认停用合同
+    sleep    2
+    Capture Page Screenshot
+    Unselect Frame
+    Wait Until Page Contains    确认停用此合同？
+    Click Element    xpath=${button_ok}    #点击ok
     Wait Until Page Contains    有方案关联此合同，不能停用！
     Capture Page Screenshot
-    sleep    2
+    sleep    3
     Click Button    xpath=${button_ok}    #点击ok
+    [Teardown]
 
 合同管理_停用2
     [Documentation]    *前置条件：未关联产品方案*
-    登录信息
+    [Tags]    pass
     合同管理列表
     #点击停用
     Click Link    xpath=//a[contains(@data-id,'221') and contains(text(),'停用')]    #停用
@@ -130,10 +167,6 @@ Resource          ../数据库查询.txt
     sleep    2
     Click Button    xpath=${button_ok}    #点击ok
 
-合同管理_关联方案
-    登录信息
-    合同管理列表
-
 查询sql
     [Documentation]    *查询sql*
     Connect To Database Using Custom Params    pymysql    ${pymysql}
@@ -145,8 +178,20 @@ Resource          ../数据库查询.txt
     Disconnect From Database
 
 test
-    登录信息
+    [Tags]    pass
     Click Link    xpath=//*[@id="systemAndMenu"]/li[2]/a    #合同管理
     sleep    2
     Select Frame    xpath=${iframe2}
     Click Link    xpath=//a[contains(@data-id,'215') and contains(text(),'查看')]    #查看
+
+test2
+    [Tags]    pass
+    log    新增合同_提交
+    进入新增合同页面
+    Unselect Frame
+    Select Frame    xpath=${iframe3}
+    #输入信息
+    合同名变量    #参数化
+    Input Text    name=contractname    ${contract_name}    #合同名称
+    sleep    3
+    Select From List    name=type1    借款协议

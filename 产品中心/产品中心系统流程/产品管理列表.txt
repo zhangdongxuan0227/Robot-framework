@@ -1,5 +1,6 @@
 *** Settings ***
 Documentation     *产品管理列表*
+Force Tags        pass
 Library           Selenium2Library
 Library           AutoItLibrary
 Resource          ../系统信息.txt
@@ -63,6 +64,7 @@ Library           OperatingSystem
     Click Link    xpath=//*[@id="cancelbtn"]    #弹出对话框
     Capture Page Screenshot
     Unselect Frame
+    Wait Until Page Contains    取消后您修改的信息将会丢失？    #显示等待
     Click Button    xpath=${button_ok}    #点击确定
     SLEEP    4
     关闭浏览器

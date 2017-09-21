@@ -1,4 +1,11 @@
 *** Test Cases ***
 seperate
-    ${a}    Catenate    SEPARATOR=**    nihao    shijie
-    log    ${a}
+    :FOR    ${index}    in range    11
+    \    log    ${index}
+    \    ${a}    Catenate    SEPARATOR=    星火贷    ${index}
+    \    ${newa}    Set Variable    ${a}
+    \    log    ${newa}
+    ${time}    get time
+    log    time
+    ${b}    evaluate    random.randint(0,20)    random
+    log    ${b}
